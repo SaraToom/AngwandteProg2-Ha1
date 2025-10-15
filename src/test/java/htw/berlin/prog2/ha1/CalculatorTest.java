@@ -90,5 +90,17 @@ class CalculatorTest {
 
 
     //TODO hier weitere Tests erstellen
+    @Test
+    @DisplayName("should set screen to 0 ")
+    void testClearKey() {
+        Calculator calc = new Calculator();
+        calc.pressDigitKey(3);
+
+        calc.pressClearKey();
+        String expected = "0";
+
+        String actual = calc.readScreen();
+        assertEquals(expected, actual);
+    }
 }
 
