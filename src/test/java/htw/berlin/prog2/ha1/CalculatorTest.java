@@ -89,7 +89,7 @@ class CalculatorTest {
     }
 
 
-    //TODO hier weitere Tests erstellen
+    //Teilaufgabe 1: Schreiben Sie einen neuen zusätzlichen Test, der eine bisher nicht getestete Funktionalität abdeckt, die bereits funktioniert und der daher direkt grün wird.
     @Test
     @DisplayName("should set screen to 0 ")
     void testClearKey() {
@@ -101,6 +101,47 @@ class CalculatorTest {
 
         String actual = calc.readScreen();
         assertEquals(expected, actual);
+    }
+
+//Teilaufgabe 2: Schreiben Sie zwei weitere zusätzliche Tests, die zwei unterschiedliche Fehlerkategorien aufdecken (d.h. deren Fehlerursachen in unterschiedlichen Methoden liegen) und somit fehlschlagen.
+    @Test
+    @DisplayName("should set screen to 0 ")
+    void testClearKeyOnlyScreen(){
+        Calculator calc = new Calculator();
+        calc.pressDigitKey(5);
+        calc.pressBinaryOperationKey("+");
+        calc.pressDigitKey(3);
+// Drücken der Clear-Taste sollte nur den Bildschirm löschen, aber latestValue behalten
+        calc.pressClearKey();
+
+        calc.pressDigitKey(2);
+        calc.pressEqualsKey();
+
+    
+        String expected = "7";
+        String actual = calc.readScreen();
+
+        System.out.println("Expected: " + expected + " | Actual: " + actual);
+
+        
+        assertEquals(expected, actual);
+    }
+
+    @Test
+    @DisplayName("sollte den negativen zweiten Operanden korrekt verarbeiten")
+    void testNegative(){
+        Calculator calc = new Calculator();
+        calc.pressDigitKey(5);
+        calc.pressBinaryOperationKey("+");
+        calc.pressDigitKey(3);
+        calc.pressNegativeKey(); //maccht aus 3 -3
+        calc.pressEqualsKey();
+
+        String expected = "2"; // 5 + (-3) =2
+        Sting actual = calc.readScreen();
+
+        assertEquals (expected, actual);
+
     }
 }
 
