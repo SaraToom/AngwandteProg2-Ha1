@@ -138,7 +138,7 @@ class CalculatorTest {
         calc.pressEqualsKey();
 
         String expected = "2"; // 5 + (-3) =2
-        Sting actual = calc.readScreen();
+        String actual = calc.readScreen();
 
         assertEquals (expected, actual);
 

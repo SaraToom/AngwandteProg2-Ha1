@@ -37,17 +37,12 @@ public class Calculator {
     }
 
     /**
-     * Empfängt den Befehl der C- bzw. CE-Taste (Clear bzw. Clear Entry).
-     * Einmaliges Drücken der Taste löscht die zuvor eingegebenen Ziffern auf dem Bildschirm
-     * so dass "0" angezeigt wird, jedoch ohne zuvor zwischengespeicherte Werte zu löschen.
-     * Wird daraufhin noch einmal die Taste gedrückt, dann werden auch zwischengespeicherte
-     * Werte sowie der aktuelle Operationsmodus zurückgesetzt, so dass der Rechner wieder
-     * im Ursprungszustand ist.
+     * Empfängt den Befehl der C-Taste.
+     * Löscht die eingegeben Zahlen und setzt den Bildschirm auf "0" zurück, ohne latestValue und den Operanden zu löschen.
      */
     public void pressClearKey() {
         screen = "0";
-        latestOperation = "";
-        latestValue = 0.0;
+        
     }
 
     /**
@@ -62,6 +57,9 @@ public class Calculator {
     public void pressBinaryOperationKey(String operation)  {
         latestValue = Double.parseDouble(screen);
         latestOperation = operation;
+        screen ="0"; //Damit negative zweite Operanden korrekt funktionieren
+              //weil sie sich jetzt immer auf die neue Eingabe bezieht und nicht auf den alten Wert
+        
     }
 
     /**
@@ -105,8 +103,13 @@ public class Calculator {
      * entfernt und der Inhalt fortan als positiv interpretiert.
      */
     public void pressNegativeKey() {
-        screen = screen.startsWith("-") ? screen.substring(1) : "-" + screen;
-    }
+        if (screen.equals("0")) return; //0 bleibt 0
+        if(screen.startsWith("-")){      //falls negativ
+            screen = screen.substring(1); // macht positiv
+        } else {                            
+            screen = "-" + screen;         //macht negativ
+        }
+     }
 
     /**
      * Empfängt den Befehl der gedrückten "="-Taste.
